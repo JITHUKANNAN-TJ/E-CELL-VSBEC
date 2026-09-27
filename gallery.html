@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Gallery | E-Cell V.S.B. Engineering College</title>
+  <meta name="description" content="Event galleries &mdash; Workshops, Pitching (Eureka), Events, Team, Hackathons, Networking. Click any event to view its gallery.">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .gallery-hero{padding:140px 0 48px;background:var(--bg-dark);text-align:center}
+    .gallery-hero h1{font-size:clamp(2.2rem,5vw,4rem);font-weight:900;letter-spacing:-0.02em}
+    .gallery-hero p{color:var(--text-muted);margin:16px auto 0;max-width:640px}
+    .gallery-hero .red-line{margin:16px auto}
+    /* Organized filter bar */
+    .gallery-filters-wrap{background:var(--bg-dark);padding:0 0 28px;border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:72px;z-index:20;backdrop-filter:blur(12px)}
+    .gallery-filters{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:860px;margin:0 auto}
+    .gallery-filters button{padding:9px 18px;border:1px solid var(--light-border);background:rgba(255,255,255,0.04);color:var(--text-muted);border-radius:24px;font-size:0.78rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;cursor:pointer;transition:var(--transition)}
+    .gallery-filters button:hover{border-color:var(--accent);color:var(--white);background:rgba(37,99,235,0.12)}
+    .gallery-filters button.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 4px 16px rgba(37,99,235,0.3)}
+    /* Organized event sections */
+    .event-gallery{padding:80px 0;border-top:1px solid rgba(255,255,255,0.06)}
+    .event-gallery:nth-child(even){background:var(--bg-dark)}
+    .event-gallery:nth-child(odd){background:#0F0F0F}
+    .event-gallery.hidden{display:none}
+    .event-gallery__head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:8px}
+    .event-gallery__head h2{font-size:1.9rem;font-weight:800;letter-spacing:-0.02em}
+    .event-gallery__head small{background:var(--accent);color:#fff;padding:6px 14px;border-radius:20px;font-size:0.72rem;letter-spacing:0.09em;text-transform:uppercase;font-weight:700}
+    .event-gallery__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px}
+    .event-gallery__item{overflow:hidden;cursor:zoom-in;border:1px solid var(--light-border);border-radius:14px;aspect-ratio:4/3;background:#000;transition:var(--transition);position:relative}
+    .event-gallery__item:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.35)}
+    .event-gallery__item img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+    .event-gallery__item:hover img{transform:scale(1.06)}
+    .event-gallery__item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 55%);opacity:0;transition:opacity var(--transition);pointer-events:none}
+    .event-gallery__item:hover::after{opacity:1}
+    @media(max-width:1023px){.event-gallery__grid{grid-template-columns:repeat(2,1fr);gap:18px}}
+    @media(max-width:600px){.event-gallery__grid{grid-template-columns:1fr;gap:16px}}
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;z-index:2000;padding:24px}
+    .lightbox.active{display:flex}
+    .lightbox img{max-width:90vw;max-height:85vh;object-fit:contain;border:2px solid rgba(255,255,255,0.15);border-radius:12px}
+    .lightbox__caption{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.6);color:#fff;padding:8px 16px;border-radius:20px;font-size:0.85rem;backdrop-filter:blur(8px)}
+    .lightbox__close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;transition:var(--transition)}
+    .lightbox__close:hover{background:var(--accent);border-color:var(--accent)}
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <nav class="nav" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container nav__inner">
+      <a href="index.html" class="nav__brand" aria-label="E-Cell Home">
+        <img src="images/e-cell-logo.png" alt="E-CELL" style="height:56px;width:56px;object-fit:contain" loading="lazy" width="1254" height="1254">
+        <small>E-CELL VSBEC</small>
+      </a>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#events">Events</a></li>
+        <li><a href="#" class="active">Gallery</a></li>
+        <li><a href="index.html#team">Team</a></li>
+        <li><a href="eureka.html">Eureka</a></li>
+      </ul>
+      <a href="index.html#join" class="nav__cta desktop-only">JOIN E-CELL &rarr;</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav__mobile" id="navMobile" role="dialog" aria-label="Mobile navigation">
+    <a href="index.html">HOME</a><a href="eureka.html">EUREKA</a><a href="gallery.html">GALLERY</a><a href="index.html#team">TEAM</a><a href="index.html#join" class="btn btn-primary" style="margin-top:24px;justify-content:center;">JOIN E-CELL &rarr;</a>
+  </div>
+  <main id="main-content">
+    <section class="gallery-hero" aria-label="Gallery Hero">
+      <div class="container">
+        <p class="section-label" style="justify-content:center">GALLERY</p>
+        <h1>EVENT GALLERIES</h1>
+        <div class="red-line" aria-hidden="true" style="margin:16px auto"></div>
+        <p>Click an event from the homepage &mdash; or jump to any event below. Click any photo to view it full-screen.</p>
+      </div>
+    </section>
+
+    <!-- Organized Filters -->
+    <div class="gallery-filters-wrap">
+      <div class="container">
+        <div class="gallery-filters" role="tablist" aria-label="Gallery filters">
+          <button class="active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button data-filter="workshops" role="tab" aria-selected="false">Workshops</button>
+          <button data-filter="pitching" role="tab" aria-selected="false">Pitching</button>
+          <button data-filter="events" role="tab" aria-selected="false">Events</button>
+          <button data-filter="team" role="tab" aria-selected="false">Team</button>
+          <button data-filter="hackathons" role="tab" aria-selected="false">Hackathons</button>
+          <button data-filter="networking" role="tab" aria-selected="false">Networking</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workshops -->
+    <section class="event-gallery" id="workshops" aria-label="Workshops Gallery">
+      <div class="container">
+        <div class="event-gallery__head"><div><p class="section-label">01 &mdash; WORKSHOPS</p><h2>Workshops</h2></div><small>Hands-on learning &bull; 6 photos</small></div>
+        <div class="event-gallery__grid">
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80&fit=crop" alt="Workshops 1" loading="lazy" data-event="Workshops"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb4?w=800&q=80&fit=crop" alt="Workshops 2" loading="lazy" data-event="Workshops"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&q=80&fit=crop" alt="Workshops 3" loading="lazy" data-event="Workshops"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80&fit=crop" alt="Workshops 4" loading="lazy" data-event="Workshops"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80&fit=crop" alt="Workshops 5" loading="lazy" data-event="Workshops"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1531482615713-2afd690979bc?w=800&q=80&fit=crop" alt="Workshops 6" loading="lazy" data-event="Workshops"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pitching (Eureka) -->
+    <section class="event-gallery" id="pitching" aria-label="Pitching Gallery">
+      <div class="container">
+        <div class="event-gallery__head"><div><p class="section-label">02 &mdash; PITCHING</p><h2>Pitching &bull; Eureka 2026</h2></div><small>5-min Pitch + 7-min Q&A &bull; 14 photos</small></div>
+        <div class="event-gallery__grid">
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-01.jpg" alt="Eureka Pitching 01" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-02.jpg" alt="Eureka Pitching 02" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-03.jpg" alt="Eureka Pitching 03" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-04.jpg" alt="Eureka Pitching 04" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-05.jpg" alt="Eureka Pitching 05" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-06.jpg" alt="Eureka Pitching 06" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-07.jpg" alt="Eureka Pitching 07" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-08.jpg" alt="Eureka Pitching 08" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-09.jpg" alt="Eureka Pitching 09" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-10.jpg" alt="Eureka Pitching 10" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-11.jpg" alt="Eureka Pitching 11" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-12.jpg" alt="Eureka Pitching 12" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-13.jpg" alt="Eureka Pitching 13" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+          <div class="event-gallery__item"><img src="images/eureka-gallery/eureka-14.jpg" alt="Eureka Pitching 14" loading="lazy" data-event="Pitching &mdash; Eureka 2026"></div>
+        </div>
+        <div style="text-align:center;margin-top:24px"><a href="eureka.html" class="btn btn-outline btn--sm">VIEW EUREKA DETAILS &rarr;</a></div>
+      </div>
+    </section>
+
+    <!-- Events -->
+    <section class="event-gallery" id="events" aria-label="Events Gallery">
+      <div class="container">
+        <div class="event-gallery__head"><div><p class="section-label">03 &mdash; EVENTS</p><h2>Events</h2></div><small>Celebrations & showcases &bull; 4 photos</small></div>
+        <div class="event-gallery__grid">
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&q=80&fit=crop" alt="Events 1" loading="lazy" data-event="Events"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80&fit=crop" alt="Events 2" loading="lazy" data-event="Events"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80&fit=crop" alt="Events 3" loading="lazy" data-event="Events"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=800&q=80&fit=crop" alt="Events 4" loading="lazy" data-event="Events"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="event-gallery" id="team" aria-label="Team Gallery">
+      <div class="container">
+        <div class="event-gallery__head"><div><p class="section-label">04 &mdash; TEAM</p><h2>Team</h2></div><small>People behind the movement &bull; 4 photos</small></div>
+        <div class="event-gallery__grid">
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80&fit=crop" alt="Team 1" loading="lazy" data-event="Team"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1529150263270-b0b703cc1978?w=800&q=80&fit=crop" alt="Team 2" loading="lazy" data-event="Team"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f8e1c0?w=800&q=80&fit=crop" alt="Team 3" loading="lazy" data-event="Team"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?w=800&q=80&fit=crop" alt="Team 4" loading="lazy" data-event="Team"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hackathons -->
+    <section class="event-gallery" id="hackathons" aria-label="Hackathons Gallery">
+      <div class="container">
+        <div class="event-gallery__head"><div><p class="section-label">05 &mdash; HACKATHONS</p><h2>Hackathons</h2></div><small>Build sprints &bull; 4 photos</small></div>
+        <div class="event-gallery__grid">
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=800&q=80&fit=crop" alt="Hackathons 1" loading="lazy" data-event="Hackathons"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80&fit=crop" alt="Hackathons 2" loading="lazy" data-event="Hackathons"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80&fit=crop" alt="Hackathons 3" loading="lazy" data-event="Hackathons"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1531482615713-2afd690979bc?w=800&q=80&fit=crop" alt="Hackathons 4" loading="lazy" data-event="Hackathons"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Networking -->
+    <section class="event-gallery" id="networking" aria-label="Networking Gallery">
+      <div class="container">
+        <div class="event-gallery__head"><div><p class="section-label">06 &mdash; NETWORKING</p><h2>Networking</h2></div><small>Connections that matter &bull; 4 photos</small></div>
+        <div class="event-gallery__grid">
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80&fit=crop" alt="Networking 1" loading="lazy" data-event="Networking"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&q=80&fit=crop" alt="Networking 2" loading="lazy" data-event="Networking"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1551836022-deb6108f5d4c?w=800&q=80&fit=crop" alt="Networking 3" loading="lazy" data-event="Networking"></div>
+          <div class="event-gallery__item"><img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f553?w=800&q=80&fit=crop" alt="Networking 4" loading="lazy" data-event="Networking"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer" role="contentinfo"><div class="container"><div class="footer__grid"><div class="footer__brand-area"><p class="footer__brand">E-CELL<small>V.S.B. ENGINEERING COLLEGE</small></p><p class="footer__tagline">IDEAS &bull; PEOPLE &bull; IMPACT</p></div><div><h4 class="footer__heading">EXPLORE</h4><ul class="footer__links"><li><a href="index.html">Home</a></li><li><a href="eureka.html">Eureka</a></li><li><a href="gallery.html">Gallery</a></li></ul></div><div><h4 class="footer__heading">CONNECT</h4><ul class="footer__links"><li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li></ul></div><div><h4 class="footer__heading">CONTACT</h4><p class="footer__contact-item">V.S.B. Engineering College<br>Karur, Tamil Nadu</p></div></div><div class="footer__bottom"><p class="footer__copyright">&copy; 2026 E-Cell, V.S.B. Engineering College</p></div></div></footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Image lightbox" aria-hidden="true">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Close">&times;</button>
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox__caption" id="lightboxCaption"></div>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script>
+    (function(){
+      const lb=document.getElementById('lightbox'), img=document.getElementById('lightboxImg'), cap=document.getElementById('lightboxCaption'), close=document.getElementById('lightboxClose');
+      function open(src,alt,ev){
+        img.src=src; img.alt=alt||''; cap.textContent=(ev?ev+' &mdash; ':'')+alt;
+        lb.classList.add('active'); lb.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+      }
+      function shut(){ lb.classList.remove('active'); lb.setAttribute('aria-hidden','true'); document.body.style.overflow=''; img.src=''; }
+      document.addEventListener('click',e=>{
+        const it=e.target.closest('.event-gallery__item img');
+        if(it){ open(it.src.replace(/w=\d+/,'w=1600'), it.alt, it.dataset.event||''); }
+      });
+      close.addEventListener('click',shut);
+      lb.addEventListener('click',e=>{ if(e.target===lb) shut(); });
+      document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&lb.classList.contains('active')) shut(); });
+      // Organized filtering
+      const filterBtns=document.querySelectorAll('.gallery-filters [data-filter]');
+      const galleries=document.querySelectorAll('.event-gallery');
+      function applyFilter(f){
+        filterBtns.forEach(b=>{
+          const on=b.dataset.filter===f;
+          b.classList.toggle('active',on);
+          b.setAttribute('aria-selected',on?'true':'false');
+        });
+        galleries.forEach(g=>{
+          const show = f==='all' || g.id===f;
+          g.classList.toggle('hidden', !show);
+        });
+        if(f!=='all'){
+          const target=document.getElementById(f);
+          if(target) setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),120);
+          if(history.replaceState) history.replaceState(null,'','#'+f);
+        } else {
+          if(history.replaceState) history.replaceState(null,'',location.pathname);
+        }
+      }
+      filterBtns.forEach(btn=> btn.addEventListener('click',()=>applyFilter(btn.dataset.filter)));
+      // deep link: gallery.html#pitching &rarr; apply filter + scroll
+      if(location.hash){
+        const h=location.hash.replace('#','').toLowerCase();
+        const btn=document.querySelector(`.gallery-filters [data-filter="${h}"]`);
+        if(btn){ applyFilter(h); } else { const t=document.querySelector(location.hash); if(t) setTimeout(()=>t.scrollIntoView({behavior:'smooth',block:'start'}),100); }
+      }
+      // also support ?event=pitching
+      const p=new URLSearchParams(location.search).get('event'); if(p){ const id=p.toLowerCase().replace(/\s+/g,''); const btn=document.querySelector(`.gallery-filters [data-filter="${id}"]`); if(btn) applyFilter(id); else { const el=document.getElementById(id); if(el) setTimeout(()=>el.scrollIntoView({behavior:'smooth'}),150); } }
+    })();
+  </script>
+</body>
+</html>

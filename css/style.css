@@ -265,7 +265,7 @@ button {
 .nav__links {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 28px;
   list-style: none;
 }
 
@@ -312,6 +312,8 @@ button {
   color: var(--text-dark);
   border-radius: 2px;
   transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .nav__cta:hover {
@@ -1619,6 +1621,65 @@ button {
 
 /* ===== RESPONSIVE ===== */
 
+/* Nav: tighten link spacing before the desktop nav overflows */
+@media (max-width: 1280px) {
+  .nav__links {
+    gap: 16px;
+  }
+
+  .nav__links a {
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* Nav: the full link row needs more room than 1100px can give it */
+@media (max-width: 1100px) {
+  .nav__links {
+    gap: 12px;
+  }
+
+  .nav__links a {
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+  }
+
+  .nav__brand {
+    gap: 8px;
+  }
+
+  .nav__brand img {
+    height: 36px;
+    width: 36px;
+  }
+
+  .nav__brand small {
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+  }
+
+  .nav__cta {
+    padding: 8px 13px;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+  }
+}
+
+/* Nav: below this the full link row cannot fit, so collapse to the menu button */
+@media (max-width: 900px) {
+  .nav__links {
+    display: none;
+  }
+
+  .nav__cta.desktop-only {
+    display: none;
+  }
+
+  .nav__toggle {
+    display: flex;
+  }
+}
+
 /* Tablet */
 @media (max-width: 1023px) {
   .container {
@@ -1966,7 +2027,7 @@ body.nav-open {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 901px) {
   .nav__mobile {
     display: none !important;
   }

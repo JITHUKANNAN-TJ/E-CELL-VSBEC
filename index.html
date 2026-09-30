@@ -38,12 +38,11 @@
         <li><a href="#about">About</a></li>
         <li><a href="#programs">Programs</a></li>
         <li><a href="#events">Events</a></li>
-        <li><a href="#projects">Projects</a></li>
         <li><a href="#community">Community</a></li>
         <li><a href="#team">Team</a></li>
         <li><a href="#resources">Resources</a></li>
       </ul>
-      <a href="#join" class="nav__cta desktop-only">JOIN E-CELL &rarr;</a>
+      <a href="#join" class="nav__cta desktop-only" data-join-modal>JOIN E-CELL &rarr;</a>
       <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
         <span></span>
         <span></span>
@@ -58,11 +57,10 @@
     <a href="#about">ABOUT</a>
     <a href="#programs">PROGRAMS</a>
     <a href="#events">EVENTS</a>
-    <a href="#projects">PROJECTS</a>
     <a href="#community">COMMUNITY</a>
     <a href="#team">TEAM</a>
     <a href="#resources">RESOURCES</a>
-    <a href="#join" class="btn btn-primary" style="margin-top: 24px;">JOIN E-CELL &rarr;</a>
+    <a href="#join" class="btn btn-primary" style="margin-top: 24px;" data-join-modal>JOIN E-CELL &rarr;</a>
   </div>
 
   <!-- Main Content -->
@@ -82,7 +80,7 @@
             E-Cell, V.S.B. Engineering College is a student-driven entrepreneurship ecosystem that helps students explore ideas, develop solutions, build projects and connect with the entrepreneurial ecosystem.
           </p>
           <div class="hero__actions">
-            <a href="#join" class="btn btn-primary">
+            <a href="#join" class="btn btn-primary" data-join-modal>
               JOIN E-CELL <span class="arrow" aria-hidden="true">&rarr;</span>
             </a>
             <a href="#events" class="btn btn-outline">
@@ -534,11 +532,11 @@
         </div>
         <div class="gallery__grid">
           <a href="gallery.html#pitching" class="gallery__item reveal" aria-label="Open Pitching gallery">
-            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&q=80&fit=crop" alt="Pitching event" loading="lazy" width="400" height="400">
+            <img src="images/eureka-gallery/eureka-11.jpg" alt="Eureka pitching event" loading="lazy" width="400" height="400">
             <div class="gallery__item-overlay"><span class="gallery__item-label">Pitching &rarr;</span></div>
           </a>
           <a href="gallery.html#team" class="gallery__item reveal" aria-label="Open Team gallery">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&q=80&fit=crop" alt="Team photo" loading="lazy" width="400" height="600">
+            <img src="images/team-gallery/team-01.jpg" alt="Team photo" loading="lazy" width="400" height="600">
             <div class="gallery__item-overlay"><span class="gallery__item-label">Team &rarr;</span></div>
           </a>
         </div>
@@ -605,7 +603,7 @@
             Join a community of students, innovators and aspiring entrepreneurs building what comes next.
           </p>
           <div class="final-cta__actions">
-            <a href="#" class="btn btn-primary">
+            <a href="#" class="btn btn-primary" data-join-modal>
               JOIN E-CELL <span class="arrow" aria-hidden="true">&rarr;</span>
             </a>
             <a href="#contact" class="btn btn-outline">
@@ -641,9 +639,8 @@
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#programs">Programs</a></li>
-            <li><a href="#events">Upcoming Events</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#community">Community</a></li>
+              <li><a href="#events">Upcoming Events</a></li>
+              <li><a href="#community">Community</a></li>
             <li><a href="#team">Team</a></li>
             <li><a href="#resources">Resources</a></li>
           </ul>
@@ -670,6 +667,21 @@
       </div>
     </div>
   </footer>
+
+  <!-- Join / Roles-full Modal -->
+  <div class="join-modal" id="joinModal" role="dialog" aria-modal="true" aria-labelledby="joinModalTitle" aria-hidden="true">
+    <div class="join-modal__card">
+      <button class="join-modal__close" id="joinModalClose" aria-label="Close">&times;</button>
+      <p class="section-label" style="justify-content:center">RECRUITMENT</p>
+      <h3 id="joinModalTitle">ALL ROLES ARE FULL.</h3>
+      <div class="red-line" aria-hidden="true" style="margin:14px auto"></div>
+      <p class="join-modal__text">Recruitment for this cycle is closed &mdash; every role has been filled. Reach out and we&rsquo;ll notify you when applications reopen.</p>
+      <div class="join-modal__actions">
+        <button class="btn btn-primary" id="joinModalOk" type="button">GOT IT</button>
+        <a href="#contact" class="btn btn-outline" id="joinModalContact">CONTACT US</a>
+      </div>
+    </div>
+  </div>
 
   <script src="js/script.js"></script>
   <script src="js/ProfileCard.js"></script>

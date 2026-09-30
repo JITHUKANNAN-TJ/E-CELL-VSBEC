@@ -107,7 +107,7 @@
   document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
     anchor.addEventListener('click', function(e) {
       var targetId = this.getAttribute('href');
-      if (targetId === '#') return;
+      if (targetId === '#' || this.hasAttribute('data-join-modal')) return;
       var target = document.querySelector(targetId);
       if (target) {
         e.preventDefault();
@@ -116,6 +116,41 @@
       }
     });
   });
+
+  // Join E-Cell → roles-full modal
+  var joinModal = document.getElementById('joinModal');
+  if (joinModal) {
+    var joinModalClose = document.getElementById('joinModalClose');
+    var joinModalOk = document.getElementById('joinModalOk');
+    var joinModalContact = document.getElementById('joinModalContact');
+    function openJoinModal(e) {
+      if (e) e.preventDefault();
+      joinModal.classList.add('active');
+      joinModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeJoinModal() {
+      joinModal.classList.remove('active');
+      joinModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('[data-join-modal]').forEach(function(btn) {
+      btn.addEventListener('click', openJoinModal);
+    });
+    joinModalClose.addEventListener('click', closeJoinModal);
+    joinModalOk.addEventListener('click', closeJoinModal);
+    joinModal.addEventListener('click', function(e) {
+      if (e.target === joinModal) closeJoinModal();
+    });
+    if (joinModalContact) {
+      joinModalContact.addEventListener('click', closeJoinModal);
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && joinModal.classList.contains('active')) {
+        closeJoinModal();
+      }
+    });
+  }
 
 
   // Back to Top button

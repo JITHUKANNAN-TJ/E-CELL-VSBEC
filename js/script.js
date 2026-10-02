@@ -266,6 +266,52 @@
   }
 
 
+  // Resources "Explore" — coming soon modal
+  var soonModal = document.getElementById('soonModal');
+  if (soonModal) {
+    var soonClose = document.getElementById('soonModalClose');
+    var soonOk = document.getElementById('soonModalOk');
+    var soonText = document.getElementById('soonModalText');
+    var DEFAULT_SOON_TEXT = soonText ? soonText.innerHTML : '';
+
+    function openSoonModal(e) {
+      if (e) e.preventDefault();
+      var card = e && e.currentTarget.closest('.resource-card');
+      var title = card ? card.querySelector('.resource-card__title') : null;
+      soonText.innerHTML = title
+        ? '<strong>' + title.textContent.trim() + '</strong> resources are being compiled and will be live here soon.'
+        : DEFAULT_SOON_TEXT;
+      document.body.style.overflow = 'hidden';
+      soonModal.classList.add('active');
+      soonModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeSoonModal() {
+      soonModal.classList.remove('active');
+      soonModal.setAttribute('aria-hidden', 'true');
+      if (!joinModal || !joinModal.classList.contains('active')) {
+        if (!contactModal || !contactModal.classList.contains('active')) {
+          document.body.style.overflow = '';
+        }
+      }
+    }
+
+    document.querySelectorAll('[data-soon-modal]').forEach(function(btn) {
+      btn.addEventListener('click', openSoonModal);
+    });
+    soonClose.addEventListener('click', closeSoonModal);
+    soonOk.addEventListener('click', closeSoonModal);
+    soonModal.addEventListener('click', function(e) {
+      if (e.target === soonModal) closeSoonModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && soonModal.classList.contains('active')) {
+        closeSoonModal();
+      }
+    });
+  }
+
+
   // Back to Top button
   var backToTop = document.getElementById('backToTop');
   if (backToTop) {

@@ -568,37 +568,37 @@
             <div class="resource-card__icon" aria-hidden="true"></div>
             <h3 class="resource-card__title">ENTREPRENEURSHIP GUIDES</h3>
             <p class="resource-card__desc">Curated reading materials and guides on startup fundamentals, business strategy and innovation.</p>
-            <a href="#" class="resource-card__cta">Explore <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <a href="#" class="resource-card__cta" data-soon-modal>Explore <span class="arrow" aria-hidden="true">&rarr;</span></a>
           </div>
           <div class="resource-card reveal">
             <div class="resource-card__icon" aria-hidden="true"></div>
             <h3 class="resource-card__title">IDEA VALIDATION</h3>
             <p class="resource-card__desc">Frameworks and tools to validate your idea, find product-market fit and test assumptions.</p>
-            <a href="#" class="resource-card__cta">Explore <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <a href="#" class="resource-card__cta" data-soon-modal>Explore <span class="arrow" aria-hidden="true">&rarr;</span></a>
           </div>
           <div class="resource-card reveal">
             <div class="resource-card__icon" aria-hidden="true"></div>
             <h3 class="resource-card__title">BUSINESS MODEL CANVAS</h3>
             <p class="resource-card__desc">Templates and workshops for building and iterating your business model canvas.</p>
-            <a href="#" class="resource-card__cta">Explore <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <a href="#" class="resource-card__cta" data-soon-modal>Explore <span class="arrow" aria-hidden="true">&rarr;</span></a>
           </div>
           <div class="resource-card reveal">
             <div class="resource-card__icon" aria-hidden="true"></div>
             <h3 class="resource-card__title">PITCH DECK RESOURCES</h3>
             <p class="resource-card__desc">Examples, templates and tips for creating compelling pitch decks that win investors.</p>
-            <a href="#" class="resource-card__cta">Explore <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <a href="#" class="resource-card__cta" data-soon-modal>Explore <span class="arrow" aria-hidden="true">&rarr;</span></a>
           </div>
           <div class="resource-card reveal">
             <div class="resource-card__icon" aria-hidden="true"></div>
             <h3 class="resource-card__title">COMPETITION OPPORTUNITIES</h3>
             <p class="resource-card__desc">Curated list of hackathons, pitch competitions and innovation challenges for students.</p>
-            <a href="#" class="resource-card__cta">Explore <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <a href="#" class="resource-card__cta" data-soon-modal>Explore <span class="arrow" aria-hidden="true">&rarr;</span></a>
           </div>
           <div class="resource-card reveal">
             <div class="resource-card__icon" aria-hidden="true"></div>
             <h3 class="resource-card__title">COURSES & BOOKS</h3>
             <p class="resource-card__desc">Recommended courses and books to deepen your understanding of entrepreneurship and startups.</p>
-            <a href="#" class="resource-card__cta">Explore <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <a href="#" class="resource-card__cta" data-soon-modal>Explore <span class="arrow" aria-hidden="true">&rarr;</span></a>
           </div>
         </div>
       </div>
@@ -720,6 +720,23 @@
       </div>
       <button class="contact-copy" id="contactCopy" type="button">or copy our email address</button>
       <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <!-- Coming Soon Modal -->
+  <div class="soon-modal" id="soonModal" role="dialog" aria-modal="true" aria-labelledby="soonModalTitle" aria-hidden="true">
+    <div class="soon-modal__card">
+      <button class="soon-modal__close" id="soonModalClose" type="button" aria-label="Close">&times;</button>
+      <p class="section-label" style="justify-content:center">COMING SOON</p>
+      <h3 id="soonModalTitle">RESOURCES ARE ON THE WAY.</h3>
+      <div class="red-line" aria-hidden="true" style="margin:14px auto"></div>
+      <p class="soon-modal__text" id="soonModalText">
+        We&rsquo;re putting these resources together now. They&rsquo;ll be live here soon &mdash; bookmark this page in the meantime.
+      </p>
+      <div class="soon-modal__actions">
+        <button class="btn btn-primary" id="soonModalOk" type="button">GOT IT</button>
+        <a href="mailto:vsbecell@gmail.com?subject=E-Cell%20Resources" class="btn btn-outline" data-contact-modal>REQUEST A RESOURCE</a>
+      </div>
     </div>
   </div>
 

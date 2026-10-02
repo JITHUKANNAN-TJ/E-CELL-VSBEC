@@ -604,6 +604,42 @@
   font-weight: 600;
 }
 
+.contact-mail-intro {
+  margin-top: 18px;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.contact-mail-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  text-decoration: none;
+  background: rgba(37,99,235,0.18);
+  border: 1px solid rgba(37,99,235,0.55);
+  border-radius: 999px;
+  transition: var(--transition);
+}
+
+.contact-mail-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.contact-mail-btn__icon {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
 /* ===== COUNTDOWN ===== */
 .countdown {
   display: flex;

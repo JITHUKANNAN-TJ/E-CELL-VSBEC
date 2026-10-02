@@ -153,6 +153,119 @@
   }
 
 
+  // Contact modal — builds the mail with our address in the To field
+  var CONTACT_EMAIL = 'vsbecell@gmail.com';
+  var contactModal = document.getElementById('contactModal');
+  if (contactModal) {
+    var contactClose = document.getElementById('contactModalClose');
+    var contactMailApp = document.getElementById('contactMailApp');
+    var contactGmail = document.getElementById('contactGmail');
+    var contactCopy = document.getElementById('contactCopy');
+    var contactStatus = document.getElementById('contactStatus');
+    var contactName = document.getElementById('contactName');
+    var contactEmail = document.getElementById('contactEmail');
+    var contactMessage = document.getElementById('contactMessage');
+
+    function setContactStatus(msg) {
+      contactStatus.textContent = msg || '';
+    }
+
+    function buildBody() {
+      var lines = ['Hi E-Cell Team,', ''];
+      if (contactName.value.trim()) lines.push('My name is: ' + contactName.value.trim());
+      if (contactEmail.value.trim()) lines.push('My email is: ' + contactEmail.value.trim());
+      if (lines.length === 2) lines.push('My name is:');
+      lines.push('');
+      lines.push(contactMessage.value.trim() || 'My query is:');
+      lines.push('');
+      lines.push('Thank you.');
+      return lines.join('\n');
+    }
+
+    function syncLinks() {
+      var subject = encodeURIComponent('Query for E-Cell VSBEC');
+      var body = encodeURIComponent(buildBody());
+      contactGmail.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' +
+        encodeURIComponent(CONTACT_EMAIL) + '&su=' + subject + '&body=' + body;
+      contactMailApp.dataset.mailto = 'mailto:' + encodeURIComponent(CONTACT_EMAIL) +
+        '?subject=' + subject + '&body=' + body;
+    }
+
+    function openContactModal(e) {
+      if (e) e.preventDefault();
+      document.body.style.overflow = 'hidden';
+      contactModal.classList.add('active');
+      contactModal.setAttribute('aria-hidden', 'false');
+      syncLinks();
+      setContactStatus('');
+      if (contactName) contactName.focus();
+    }
+
+    function closeContactModal() {
+      contactModal.classList.remove('active');
+      contactModal.setAttribute('aria-hidden', 'true');
+      if (!joinModal || !joinModal.classList.contains('active')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.querySelectorAll('[data-contact-modal]').forEach(function(btn) {
+      btn.addEventListener('click', openContactModal);
+    });
+
+    contactClose.addEventListener('click', closeContactModal);
+    contactModal.addEventListener('click', function(e) {
+      if (e.target === contactModal) closeContactModal();
+    });
+
+    [contactName, contactEmail, contactMessage].forEach(function(field) {
+      field.addEventListener('input', syncLinks);
+    });
+
+    contactGmail.addEventListener('click', function() {
+      setContactStatus('Opening Gmail in a new tab — press Send there.');
+    });
+
+    contactMailApp.addEventListener('click', function() {
+      syncLinks();
+      window.location.href = contactMailApp.dataset.mailto;
+      setContactStatus('No mail app opened? Use OPEN IN BROWSER instead.');
+    });
+
+    contactCopy.addEventListener('click', function() {
+      var fallback = function() {
+        var temp = document.createElement('textarea');
+        temp.value = CONTACT_EMAIL;
+        temp.setAttribute('readonly', '');
+        temp.style.position = 'fixed';
+        temp.style.opacity = '0';
+        document.body.appendChild(temp);
+        temp.select();
+        try {
+          document.execCommand('copy');
+          setContactStatus('Copied ' + CONTACT_EMAIL + ' — paste it in your mail app.');
+        } catch (err) {
+          setContactStatus('Copy failed. Please email us at ' + CONTACT_EMAIL);
+        }
+        document.body.removeChild(temp);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(CONTACT_EMAIL).then(function() {
+          setContactStatus('Copied ' + CONTACT_EMAIL + ' — paste it in your mail app.');
+        })['catch'](fallback);
+      } else {
+        fallback();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && contactModal.classList.contains('active')) {
+        closeContactModal();
+      }
+    });
+  }
+
+
   // Back to Top button
   var backToTop = document.getElementById('backToTop');
   if (backToTop) {

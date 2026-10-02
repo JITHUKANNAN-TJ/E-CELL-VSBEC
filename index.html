@@ -618,7 +618,7 @@
             <a href="#" class="btn btn-primary" data-join-modal>
               JOIN E-CELL <span class="arrow" aria-hidden="true">&rarr;</span>
             </a>
-            <a href="#contact" class="btn btn-outline">
+            <a href="mailto:vsbecell@gmail.com" class="btn btn-outline" data-contact-modal aria-label="Contact us by email at vsbecell@gmail.com">
               CONTACT US <span class="arrow" aria-hidden="true">&rarr;</span>
             </a>
           </div>
@@ -658,6 +658,9 @@
             V.S.B. Engineering College<br>
             Karur, Tamil Nadu, India
           </p>
+          <p class="footer__contact-item">
+            <a href="mailto:vsbecell@gmail.com?subject=Hello%20E-Cell%20VSBEC" aria-label="Email us at vsbecell@gmail.com">vsbecell@gmail.com</a>
+          </p>
         </div>
       </div>
       <div class="footer__bottom">
@@ -676,8 +679,48 @@
       <p class="join-modal__text">Recruitment for this cycle is closed &mdash; every role has been filled. Reach out and we&rsquo;ll notify you when applications reopen.</p>
       <div class="join-modal__actions">
         <button class="btn btn-primary" id="joinModalOk" type="button">GOT IT</button>
-        <a href="#contact" class="btn btn-outline" id="joinModalContact">CONTACT US</a>
+        <a href="mailto:vsbecell@gmail.com" class="btn btn-outline" id="joinModalContact" data-contact-modal aria-label="Contact us by email at vsbecell@gmail.com">CONTACT US</a>
       </div>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div class="contact-modal" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle" aria-hidden="true">
+    <div class="contact-modal__card">
+      <button class="contact-modal__close" id="contactModalClose" type="button" aria-label="Close">&times;</button>
+      <p class="section-label" style="justify-content:center">CONTACT US</p>
+      <h3 id="contactModalTitle">SEND US A QUERY.</h3>
+      <div class="red-line" aria-hidden="true" style="margin:14px auto"></div>
+      <p class="contact-modal__text">
+        Write your query below &mdash; it opens in your browser with our address
+        <strong>vsbecell@gmail.com</strong> already filled in.
+      </p>
+
+      <div class="contact-form">
+        <label class="contact-field">
+          <span class="contact-field__label">YOUR NAME</span>
+          <input type="text" id="contactName" autocomplete="name" placeholder="Your name" />
+        </label>
+        <label class="contact-field">
+          <span class="contact-field__label">YOUR EMAIL</span>
+          <input type="email" id="contactEmail" autocomplete="email" placeholder="you@example.com" />
+        </label>
+        <label class="contact-field">
+          <span class="contact-field__label">YOUR QUERY</span>
+          <textarea id="contactMessage" rows="4" placeholder="What would you like to ask us?"></textarea>
+        </label>
+      </div>
+
+      <div class="contact-modal__actions">
+        <a class="btn btn-primary" id="contactGmail" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=vsbecell@gmail.com" target="_blank" rel="noopener">
+          OPEN IN BROWSER <span class="arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <button class="btn btn-outline" id="contactMailApp" type="button">
+          OPEN MAIL APP
+        </button>
+      </div>
+      <button class="contact-copy" id="contactCopy" type="button">or copy our email address</button>
+      <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
     </div>
   </div>
 

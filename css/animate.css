@@ -640,6 +640,48 @@
   line-height: 1;
 }
 
+/* ===== HERO OVERLAP GUARD (short viewports) ===== */
+@media (max-height: 900px) {
+  .eureka-hero {
+    padding: 120px 0 100px;
+  }
+  .eureka-hero__label {
+    margin-bottom: 16px;
+  }
+  .eureka-hero__heading {
+    margin-bottom: 18px;
+  }
+  .eureka-hero__subheading {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .countdown {
+    margin-top: 24px;
+  }
+  .countdown__unit {
+    padding: 10px 8px 9px;
+    min-width: 64px;
+  }
+  .hero-actions {
+    margin-top: 28px;
+  }
+  .hero-scroll-indicator {
+    display: none;
+  }
+}
+@media (max-height: 700px) {
+  .eureka-hero {
+    padding: 110px 0 80px;
+  }
+  .eureka-hero__heading {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+  .eureka-hero__subheading {
+    font-size: 0.95rem;
+  }
+}
+
 /* ===== COUNTDOWN ===== */
 .countdown {
   display: flex;

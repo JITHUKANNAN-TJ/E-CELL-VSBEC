@@ -2022,6 +2022,7 @@ body.nav-open {
   position: relative;
   overflow: hidden;
   background-color: var(--bg-dark);
+  padding: 130px 0 120px;
 }
 
 .eureka-hero__image {
